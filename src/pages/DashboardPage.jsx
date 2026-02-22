@@ -8,6 +8,7 @@ function DashboardPage({
   user,
   attendance,
   onMarkPresent,
+  isMarkingAttendance,
   taskSummary,
   tasks,
   onToggleTask,
@@ -69,14 +70,14 @@ function DashboardPage({
                   <button
                     type="button"
                     onClick={onMarkPresent}
-                    disabled={attendance.isPresent}
+                    disabled={attendance.isPresent || isMarkingAttendance}
                     className={`inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition sm:w-auto ${
-                      attendance.isPresent
+                      attendance.isPresent || isMarkingAttendance
                         ? 'cursor-not-allowed bg-emerald-200 text-emerald-900/70'
                         : 'bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200'
                     }`}
                   >
-                    Mark present
+                    {isMarkingAttendance ? 'Marking...' : 'Mark present'}
                   </button>
                 </div>
 

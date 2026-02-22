@@ -10,6 +10,7 @@ function TaskBoardPage({
   tasks,
   taskSummary,
   onAddTask,
+  isCreatingTask,
   onToggleTask,
   onDeleteTask,
   onUpdateTask,
@@ -36,10 +37,12 @@ function TaskBoardPage({
     return list
   }, [filter, sort, tasks])
 
-  const addTask = () => {
-    onAddTask(title, description)
-    setTitle('')
-    setDescription('')
+  const addTask = async () => {
+    const created = await onAddTask(title, description)
+    if (created) {
+      setTitle('')
+      setDescription('')
+    }
   }
 
   return (
@@ -116,10 +119,11 @@ function TaskBoardPage({
                   </button>
                   <button
                     type="button"
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 sm:w-auto"
+                    disabled={isCreatingTask}
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-emerald-200 disabled:text-emerald-900/70 sm:w-auto"
                     onClick={addTask}
                   >
-                    Add task
+                    {isCreatingTask ? 'Adding...' : 'Add task'}
                     <iconify-icon icon="lucide:arrow-right" className="text-[18px]" />
                   </button>
                 </div>

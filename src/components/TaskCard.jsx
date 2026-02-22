@@ -5,9 +5,10 @@ function TaskCard({ task, onToggle, onDelete, onSave }) {
   const [editTitle, setEditTitle] = useState(task.title)
   const [editDescription, setEditDescription] = useState(task.description)
 
-  const saveEdit = () => {
+  const saveEdit = async () => {
     if (!editTitle.trim()) return
-    onSave(task.id, editTitle, editDescription)
+    const saved = await Promise.resolve(onSave(task.id, editTitle, editDescription))
+    if (saved === false) return
     setIsEditing(false)
   }
 

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import BackgroundDecor from '../components/BackgroundDecor.jsx'
+import { loginUser, registerUser } from '../lib/authApi'
 
 function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim())
@@ -18,6 +20,7 @@ function AuthPage({ onAuthSuccess, user }) {
     remember: true,
   })
   const [alert, setAlert] = useState({ kind: '', message: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -58,7 +61,7 @@ function AuthPage({ onAuthSuccess, user }) {
   const hasError = requiredFields.some((field) => fieldState[field].status === 'error')
   const anyTouched = requiredFields.some((field) => touched[field])
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault()
     const nextTouched = {}
     requiredFields.forEach((field) => {
@@ -79,18 +82,56 @@ function AuthPage({ onAuthSuccess, user }) {
       return
     }
 
-    const displayName = mode === 'register' ? values.name.trim() : values.email.split('@')[0] || 'Sam'
-    onAuthSuccess({
-      name: displayName.charAt(0).toUpperCase() + displayName.slice(1),
-      email: values.email.trim(),
-    })
+    try {
+      setIsSubmitting(true)
+      const response =
+        mode === 'login'
+          ? await loginUser({
+              email: values.email.trim(),
+              password: values.password,
+            })
+          : await registerUser({
+              name: values.name.trim(),
+              email: values.email.trim(),
+              password: values.password,
+            })
 
-    setAlert({
-      kind: 'success',
-      message: mode === 'login' ? 'Signed in successfully.' : 'Account created successfully.',
-    })
+      const authData = response?.data || {}
+      const fallbackName = values.email.trim().split('@')[0] || 'User'
 
-    navigate('/dashboard')
+      onAuthSuccess({
+        userId: authData.userId,
+        name: authData.name || (mode === 'register' ? values.name.trim() : fallbackName),
+        email: values.email.trim(),
+        token: authData.token,
+      })
+
+      setAlert({
+        kind: 'success',
+        message:
+          response?.message ||
+          (mode === 'login' ? 'Logged in successfully.' : 'Account created successfully.'),
+      })
+      toast.success(
+        mode === 'login'
+          ? `Welcome back, ${authData.name || fallbackName}`
+          : `Account created for ${authData.name || values.name.trim()}`
+      )
+
+      navigate('/dashboard')
+    } catch (error) {
+      setAlert({
+        kind: 'error',
+        message:
+          error instanceof Error
+            ? error.message
+            : mode === 'login'
+              ? 'Login failed. Please try again.'
+              : 'Registration failed. Please try again.',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const inputClass = (status) =>
@@ -117,7 +158,7 @@ function AuthPage({ onAuthSuccess, user }) {
 
       <main className="relative mx-auto flex min-h-screen max-w-[1200px] items-stretch px-4 py-6 sm:px-6 sm:py-8 lg:px-10 lg:py-10">
         <div className="grid w-full grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10">
-          <section className="relative flex flex-col overflow-hidden rounded-3xl border border-emerald-100 bg-white/70 p-6 shadow-sm sm:p-8 lg:p-10">
+          <section className="relative hidden overflow-hidden rounded-3xl border border-emerald-100 bg-white/70 p-6 shadow-sm md:flex md:flex-col md:p-8 lg:p-10">
             <div className="absolute -right-20 -top-24 h-56 w-56 rounded-full bg-emerald-200/45 blur-2xl" />
             <div className="absolute -left-24 bottom-8 h-64 w-64 rounded-full bg-amber-200/35 blur-2xl" />
 
@@ -331,14 +372,14 @@ function AuthPage({ onAuthSuccess, user }) {
 
                   <button
                     type="submit"
-                    disabled={anyTouched && hasError}
+                    disabled={(anyTouched && hasError) || isSubmitting}
                     className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition ${
-                      anyTouched && hasError
+                      (anyTouched && hasError) || isSubmitting
                         ? 'cursor-not-allowed bg-emerald-200 text-emerald-900/70'
                         : 'bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200'
                     }`}
                   >
-                    {mode === 'login' ? 'Sign in' : 'Create account'}
+                    {isSubmitting ? 'Creating account...' : mode === 'login' ? 'Sign in' : 'Create account'}
                     <iconify-icon icon="lucide:arrow-right" className="text-[18px]" />
                   </button>
 
