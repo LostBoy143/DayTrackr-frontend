@@ -109,7 +109,7 @@ function TaskBoardPage({
                 <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
                   <button
                     type="button"
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50 sm:w-auto"
+                    className="cursor-pointer inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50 sm:w-auto"
                     onClick={() => {
                       setTitle('')
                       setDescription('')
@@ -120,7 +120,7 @@ function TaskBoardPage({
                   <button
                     type="button"
                     disabled={isCreatingTask}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-emerald-200 disabled:text-emerald-900/70 sm:w-auto"
+                    className="cursor-pointer inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-emerald-200 disabled:text-emerald-900/70 sm:w-auto"
                     onClick={addTask}
                   >
                     {isCreatingTask ? 'Adding...' : 'Add task'}
@@ -170,7 +170,7 @@ function TaskBoardPage({
                 <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
                   <button
                     type="button"
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-emerald-200 sm:w-auto"
+                    className="cursor-pointer inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-emerald-200 sm:w-auto"
                     onClick={() =>
                       setFilter((prev) => (prev === 'all' ? 'open' : prev === 'open' ? 'done' : 'all'))
                     }
@@ -180,7 +180,7 @@ function TaskBoardPage({
                   </button>
                   <button
                     type="button"
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-emerald-200 sm:w-auto"
+                    className="cursor-pointer inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-emerald-200 sm:w-auto"
                     onClick={() =>
                       setSort((prev) => (prev === 'newest' ? 'alphabetical' : 'newest'))
                     }

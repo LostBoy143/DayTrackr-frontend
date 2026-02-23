@@ -71,7 +71,7 @@ function DashboardPage({
                     type="button"
                     onClick={onMarkPresent}
                     disabled={attendance.isPresent || isMarkingAttendance}
-                    className={`inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition sm:w-auto ${
+                    className={`inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition sm:w-auto cursor-pointer ${
                       attendance.isPresent || isMarkingAttendance
                         ? 'cursor-not-allowed bg-emerald-200 text-emerald-900/70'
                         : 'bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200'
@@ -208,7 +208,7 @@ function DashboardPage({
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                     <button
                       type="button"
-                      className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
+                      className="inline-flex cursor-pointer flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
                       onClick={onSignOut}
                     >
                       <iconify-icon icon="lucide:log-out" className="text-[18px]" />

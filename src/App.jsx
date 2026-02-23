@@ -21,19 +21,7 @@ const initialTasks = [
     title: 'Book dentist appointment',
     description: 'Pick any free slot after 6 PM.',
     completed: false,
-  },
-  {
-    id: 3,
-    title: 'Draft product outline',
-    description: '',
-    completed: false,
-  },
-  {
-    id: 4,
-    title: 'Review pull requests',
-    description: 'Prioritize urgent comments first.',
-    completed: true,
-  },
+  }
 ]
 
 function ProtectedRoute({ isAuthed, children }) {

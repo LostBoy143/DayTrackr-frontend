@@ -217,7 +217,7 @@ function AuthPage({ onAuthSuccess, user }) {
                           setTouched({})
                           setAlert({ kind: '', message: '' })
                         }}
-                        className={`inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2 text-sm font-semibold leading-none sm:gap-2 sm:px-4 ${
+                        className={`cursor-pointer inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2 text-sm font-semibold leading-none sm:gap-2 sm:px-4 ${
                           mode === 'login'
                             ? 'bg-white text-emerald-950 shadow-sm ring-1 ring-emerald-200'
                             : 'text-slate-700 hover:text-slate-900'
@@ -233,7 +233,7 @@ function AuthPage({ onAuthSuccess, user }) {
                           setTouched({})
                           setAlert({ kind: '', message: '' })
                         }}
-                        className={`inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl px-5 py-2 text-sm font-semibold leading-none sm:gap-2 sm:px-5 ${
+                        className={`cursor-pointer inline-flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-xl px-5 py-2 text-sm font-semibold leading-none sm:gap-2 sm:px-5 ${
                           mode === 'register'
                             ? 'bg-white text-emerald-950 shadow-sm ring-1 ring-emerald-200'
                             : 'text-slate-700 hover:text-slate-900'
@@ -373,7 +373,7 @@ function AuthPage({ onAuthSuccess, user }) {
                   <button
                     type="submit"
                     disabled={(anyTouched && hasError) || isSubmitting}
-                    className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition ${
+                    className={`cursor-pointer inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition ${
                       (anyTouched && hasError) || isSubmitting
                         ? 'cursor-not-allowed bg-emerald-200 text-emerald-900/70'
                         : 'bg-emerald-700 text-white hover:bg-emerald-800 focus:outline-none focus:ring-4 focus:ring-emerald-200'
